@@ -1,83 +1,49 @@
 import os
 import sys
+import pandas as pd
 
 # Add project root to Python path
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, PROJECT_ROOT)
-
-import pandas as pd
 
 from config import RAW_DATA_PATH
 from src.logger import logger
 
 
 class DataIngestion:
-    """
-    Responsible for loading the raw dataset.
-    """
 
     def __init__(self):
         self.file_path = RAW_DATA_PATH
 
     def load_data(self):
 
-        logger.info("=" * 50)
-        logger.info("Data Ingestion Started")
-        logger.info("=" * 50)
+        logger.info("=" * 60)
+        logger.info("DATA INGESTION STARTED")
+        logger.info("=" * 60)
 
-        # Check whether dataset exists
+        # Check if dataset exists
         if not os.path.exists(self.file_path):
-
-            logger.error("Dataset Not Found")
-
+            logger.error("Dataset not found.")
             raise FileNotFoundError(
                 f"Dataset not found:\n{self.file_path}"
             )
 
-        logger.info("Dataset Found")
+        try:
+            # Try reading as comma-separated
+            df = pd.read_csv(self.file_path)
 
-        # Read CSV
-        df = pd.read_csv(self.file_path)
+            # If only one column is found, try tab-separated
+            if df.shape[1] == 1:
+                logger.warning("Dataset appears to be tab-separated. Reading again...")
+                df = pd.read_csv(self.file_path, sep="\t")
 
-        logger.info("Dataset Loaded Successfully")
+            logger.info("Dataset Loaded Successfully")
 
-        return df
+            return df
 
-    def dataset_summary(self, df):
-
-        logger.info("Generating Dataset Summary")
-
-        print("\n")
-        print("=" * 60)
-        print("DATASET SHAPE")
-        print("=" * 60)
-        print(df.shape)
-
-        print("\n")
-        print("=" * 60)
-        print("COLUMN NAMES")
-        print("=" * 60)
-        print(df.columns.tolist())
-
-        print("\n")
-        print("=" * 60)
-        print("DATA TYPES")
-        print("=" * 60)
-        print(df.dtypes)
-
-        print("\n")
-        print("=" * 60)
-        print("MISSING VALUES")
-        print("=" * 60)
-        print(df.isnull().sum())
-
-        print("\n")
-        print("=" * 60)
-        print("FIRST FIVE ROWS")
-        print("=" * 60)
-        print(df.head())
-
-        logger.info("Summary Generated")
+        except Exception as e:
+            logger.error(f"Error loading dataset: {e}")
+            raise
 
 
 def main():
@@ -86,7 +52,13 @@ def main():
 
     df = ingestion.load_data()
 
-    ingestion.dataset_summary(df)
+    print("\nFirst 5 Rows\n")
+    print(df.head())
+
+    print("\nShape :", df.shape)
+
+    print("\nColumns:\n")
+    print(df.columns.tolist())
 
 
 if __name__ == "__main__":

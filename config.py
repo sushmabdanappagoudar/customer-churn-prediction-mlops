@@ -1,14 +1,8 @@
 import os
 
-# -------------------------------
-# Project Root
-# -------------------------------
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# -------------------------------
-# Dataset Paths
-# -------------------------------
 
 RAW_DATA_PATH = os.path.join(
     BASE_DIR,
@@ -24,9 +18,6 @@ PROCESSED_DATA_PATH = os.path.join(
     "customer_churn.csv"
 )
 
-# -------------------------------
-# Model
-# -------------------------------
 
 MODEL_PATH = os.path.join(
     BASE_DIR,
@@ -34,9 +25,6 @@ MODEL_PATH = os.path.join(
     "xgboost_model.pkl"
 )
 
-# -------------------------------
-# Logs
-# -------------------------------
 
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 

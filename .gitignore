@@ -1,24 +1,19 @@
-# Virtual Environment
 .venv/
-
-# Python Cache
+venv/
 __pycache__/
 *.pyc
 
-# Logs
-logs/
-
-# Models
-models/
-
-# MLflow
 mlruns/
+models/
+artifacts/
 
-# Jupyter
+.env
+
+*.log
+
 .ipynb_checkpoints/
 
-# VS Code
+.idea/
 .vscode/
 
-# Environment Variables
-.env
+.DS_Store

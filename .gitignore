@@ -4,8 +4,14 @@ __pycache__/
 *.pyc
 
 mlruns/
-models/
 artifacts/
+
+# Ignore everything in models except the deployment files
+models/*
+!models/best_model.pkl
+!models/preprocessor.pkl
+
+mlflow.db
 
 .env
 

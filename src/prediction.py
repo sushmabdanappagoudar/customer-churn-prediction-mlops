@@ -18,7 +18,7 @@ class CustomerChurnPrediction:
         self.model = joblib.load("models/best_model.pkl")
 
         self.preprocessor = joblib.load(
-            "artifacts/preprocessor.pkl"
+            "models/preprocessor.pkl"
         )
 
     def predict(self, customer_data):

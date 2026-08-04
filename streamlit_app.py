@@ -7,6 +7,7 @@ st.set_page_config(
     page_title="Customer Churn Prediction",
     page_icon="📊",
     layout="centered"
+
 )
 
 st.title("📊 Customer Churn Prediction")
